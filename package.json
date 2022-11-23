@@ -13,6 +13,8 @@
   "author": "Roman <email@mail.ru>",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
+    "excel": "^1.0.1",
     "yargs": "^17.6.2"
   }
 }
