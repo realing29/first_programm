@@ -4,8 +4,8 @@ const http = require('http')
 const PORT = 3000
 
 const server = http.createServer((req, res) => {
-	console.log('Server!')
-	res.end('Hello from server!')
+	console.log('req', req)
+	res.end('Hello from server!!!')
 })
 
 server.listen(PORT, () => {
