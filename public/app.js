@@ -5,16 +5,28 @@ document.addEventListener('click', (event) => {
 			event.target.closest('li').remove()
 		})
 	}
-	if (event.target.dataset.type === 'edit') {
-		const id = event.target.dataset.id
-		const title = event.target.closest('li').childNodes[0]
 
-		const newTitle = prompt('ведите новое значение', title.textContent.trim())
-		if (newTitle === null || newTitle === '') return
-		edit({ id, title: newTitle }).then(() => {
-			event.target.closest('li')
-		})
-		title.textContent = newTitle
+	if (event.target.dataset.type === 'editStart') {
+		const li = event.target.closest('li')
+		li.classList.add('edit')
+	}
+
+	if (event.target.dataset.type === 'cancelEdit') {
+		const li = event.target.closest('li')
+		const title = li.querySelector('.titleText')
+		const input = li.querySelector('.inputTitleText')
+		input.value = title.textContent.trim()
+		li.classList.remove('edit')
+	}
+
+	if (event.target.dataset.type === 'commitEdit') {
+		const li = event.target.closest('li')
+		const id = li.dataset.id
+		const title = li.querySelector('.titleText')
+		const newTitleInput = li.querySelector('.inputTitleText')
+		edit({ id, title: newTitleInput.value })
+		title.textContent = newTitleInput.value
+		li.classList.remove('edit')
 	}
 })
 
