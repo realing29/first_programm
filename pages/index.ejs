@@ -10,18 +10,27 @@
 			integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 			crossorigin="anonymous"
 		/>
-		<title>Node simple server</title>
+		<title><%= title %></title>
 	</head>
 	<body>
 		<div class="container">
-			<h1>This is working!</h1>
+			<h1><%= title %></h1>
 		</div>
+
 		<form action="/" method="post" class="mb-2">
 			<div class="form-group mb-2">
 				<input type="text" class="form-control" name="title" required />
 			</div>
 			<button class="btn btn-primary" type="submit">create</button>
 		</form>
+
+		<div class="card">
+			<ul class="list-group">
+				<% for(let i = 0; i < notes.length; i++) { %>
+				<li class="list-group-item"><%= notes[i].title %></li>
+				<% } %>
+			</ul>
+		</div>
 	</body>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

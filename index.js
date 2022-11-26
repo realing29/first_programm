@@ -1,21 +1,28 @@
 const chalk = require('chalk')
 const express = require('express')
-const path = require('path')
-const { addNote } = require('./notes.controller')
-
-const basePath = path.join(__dirname, 'pages')
+const { addNote, getNotes } = require('./notes.controller')
 
 const PORT = 3000
 const app = express()
+app.set('view engine', 'ejs')
+app.set('views', 'pages')
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
-	res.sendFile(path.join(basePath, 'index.html'))
+app.get('/', async (req, res) => {
+	res.render('index', {
+		title: 'Express app',
+		notes: await getNotes(),
+		created: false,
+	})
 })
 
 app.post('/', async (req, res) => {
 	await addNote(req.body.title)
-	res.sendFile(path.join(basePath, 'index.html'))
+	res.render('index', {
+		title: 'Express app',
+		notes: await getNotes(),
+		created: true,
+	})
 })
 
 app.listen(PORT, () => {
