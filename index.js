@@ -1,11 +1,15 @@
 const chalk = require('chalk')
 const express = require('express')
-const { addNote, getNotes } = require('./notes.controller')
+const { addNote, getNotes, deleteNote } = require('./notes.controller')
+const path = require('path')
 
 const PORT = 3000
 const app = express()
+
 app.set('view engine', 'ejs')
 app.set('views', 'pages')
+
+app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', async (req, res) => {
@@ -22,6 +26,15 @@ app.post('/', async (req, res) => {
 		title: 'Express app',
 		notes: await getNotes(),
 		created: true,
+	})
+})
+
+app.delete('/:id', async (req, res) => {
+	await deleteNote(req.params.id)
+	res.render('index', {
+		title: 'Express app',
+		notes: await getNotes(),
+		created: false,
 	})
 })
 
