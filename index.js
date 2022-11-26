@@ -1,5 +1,5 @@
 const yargs = require('yargs')
-const { addNote, printNotes, deleteNote } = require('./notes.controller')
+const { addNote, printNotes, deleteNote, editNote } = require('./notes.controller')
 
 yargs.command({
 	command: 'add',
@@ -34,6 +34,22 @@ yargs.command({
 	},
 	async handler({ id }) {
 		deleteNote(id)
+	},
+})
+
+yargs.command({
+	command: 'edit',
+	describe: 'edit title note, api: --id, --title',
+	builder: {
+		id: {
+			type: 'string',
+		},
+		title: {
+			type: 'string',
+		},
+	},
+	async handler({ id, title }) {
+		editNote({ id, title })
 	},
 })
 

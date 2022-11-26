@@ -55,8 +55,31 @@ const deleteNote = async (id) => {
 	}
 }
 
+const editNote = async ({ id, title }) => {
+	let isFinded = false
+
+	let notes = await fs.readFile(notesPath, { encoding: 'utf-8' })
+	notes = JSON.parse(notes)
+
+	notes = notes.map((note) => {
+		if (note.id !== id) return note
+		else {
+			isFinded = true
+
+			return { ...note, title }
+		}
+	})
+	if (isFinded) {
+		await fs.writeFile(notesPath, JSON.stringify(notes))
+		console.log(chalk.bgGreen('Note was edited!'))
+	} else {
+		console.log(chalk.red('Id is not finded'))
+	}
+}
+
 module.exports = {
 	addNote,
 	printNotes,
 	deleteNote,
+	editNote,
 }
